@@ -1,5 +1,10 @@
+# Cache files
+*.pyc
+*.pyo
+
 # Environment variables
 ./.env
 
 migrations
-.pytest_cache
+./.pytest.cache
+PEC/app.db
