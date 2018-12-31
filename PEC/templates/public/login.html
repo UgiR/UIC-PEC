@@ -1,0 +1,48 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="../../../../favicon.ico">
+
+    <title>Log in</title>
+
+    <!-- Bootstrap core CSS -->
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+
+    <!-- Custom styles for this template -->
+    <link href="{{ url_for('static', filename='css/login.css') }}" rel="stylesheet" type="text/css">
+</head>
+
+<body class="text-center">
+<form class="form-signin" action="" method="post" novalidate>
+    {{ login_user_form.hidden_tag() }}
+    <img class="mb-4" src="https://getbootstrap.com/assets/brand/bootstrap-solid.svg" alt="UIC PEC" width="72" height="72">
+    <h1 class="h3 mb-3 font-weight-normal">Please sign in</h1>
+    {{ login_user_form.email.label(class='sr-only') }}
+    {{ login_user_form.email(class='form-control', placeholder='Email address', type='email') }}
+    {{ login_user_form.password.label(class='sr-only') }}
+    {{ login_user_form.password(class='form-control', placeholder='Password') }}
+    <div class="checkbox mb-3">
+        <label>
+            {{ login_user_form.remember }} Remember me
+        </label>
+    </div>
+    {{ login_user_form.submit(class='btn btn-lg btn-primary btn-block') }}
+
+    {% with messages = get_flashed_messages() %}
+        {% if messages %}
+            {% for message in messages %}
+                <div>
+                    {{ message }}
+                </div>
+            {% endfor %}
+        {% endif %}
+    {% endwith %}
+
+</form>
+</body>
+</html>
