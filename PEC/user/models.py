@@ -1,8 +1,11 @@
 from flask_security import UserMixin, RoleMixin
+import sqlalchemy_utils
+from sqlalchemy_utils import UUIDType
 from werkzeug.security import generate_password_hash, check_password_hash
 from PEC.database import db, CRUDMixin
 from PEC.extensions import login_manager
 import datetime as dt
+import uuid
 
 
 roles_users = db.Table('roles_users',
@@ -29,6 +32,7 @@ class User(UserMixin, CRUDMixin, db.Model):
 
     __tablename__ = 'users'
     id = db.Column(db.Integer, primary_key=True)
+    uuid = db.Column(UUIDType(), nullable=False, unique=True, index=True, default=uuid.uuid4)
     username = db.Column(db.String(80), index=True, unique=True)
     email = db.Column(db.String(80), index=True, unique=True)
     password = db.Column(db.String(128))

@@ -6,7 +6,7 @@ from PEC.user.models import User
 
 class LoginForm(FlaskForm):
 
-    email = StringField('Username', validators=[DataRequired()])
+    email = StringField('Username', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
@@ -22,14 +22,17 @@ class LoginForm(FlaskForm):
         if not self.user.check_password(self.password.data):
             self.password.errors.append('Invalid password')
             return False
+        if not self.user.active:
+            self.email.errors.append('User not active')
+            return False
         return True
 
 
 class RegisterForm(FlaskForm):
 
     username = StringField('Username', validators=[DataRequired, Length(min=3, max=25)])
-    first_name = StringField('First name')
-    last_name = StringField('Last name')
+    first_name = StringField('First name', Length(max=30))
+    last_name = StringField('Last name', Length(max=30))
     email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=40)])
     password_confirm = PasswordField('Verify password',

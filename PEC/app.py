@@ -1,5 +1,5 @@
 from flask import Flask
-from PEC import public, commands
+from PEC import public, user, settings, commands
 from PEC.extensions import db, migrate, login_manager, principal
 
 
@@ -21,6 +21,8 @@ def register_extensions(app):
 
 def register_blueprints(app):
     app.register_blueprint(public.views.blueprint)
+    app.register_blueprint(user.views.blueprint)
+    app.register_blueprint(settings.views.blueprint)
 
 
 def register_commands(app):

@@ -17,16 +17,11 @@
 </head>
 
 <body>
-<nav class="navbar navbar-dark sticky-top bg-dark flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">UIC PEC</a>
-    <input class="form-control form-control-dark w-100" type="text" placeholder="Search" aria-label="Search">
+<nav class="navbar sticky-top bg-light flex-md-nowrap p-0">
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
-            {% if current_user.is_authenticated %}
-                <a class="nav-link" href="{{ url_for('public.logout') }}">Sign out</a>
-            {% else %}
-                <a class="nav-link" href="{{ url_for('public.login') }}">Sign in</a>
-            {% endif %}
+            <a class="nav-link" href="#"></a>
         </li>
     </ul>
 </nav>
@@ -36,6 +31,21 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
+                    <div class="nav-item dropdown">
+                        <a class="dropdown-toggle nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" role="button">
+                            User
+                        </a>
+                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Action</a>
+                            <a class="dropdown-item" href="#">Action</a>
+                            {% if current_user.is_authenticated %}
+                                <a class="dropdown-item" href="{{ url_for('public.logout') }}">Sign out</a>
+                            {% else %}
+                                <a class="dropdown-item" href="{{ url_for('public.login') }}">Sign in</a>
+                            {% endif %}
+                        </div>
+                    </div>
                     <li class="nav-item">
                         <a class="nav-link active" href="#">
                             <span data-feather="home"></span>

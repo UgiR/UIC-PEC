@@ -24,6 +24,7 @@ def query_user(email):
     if user is None:
         click.echo('User does not exist')
     else:
+        click.echo(user.uuid)
         click.echo(user.email)
         click.echo(user.username)
         click.echo(user.first_name)

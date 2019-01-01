@@ -29,3 +29,7 @@ def login():
 def logout():
     logout_user()
     return redirect(url_for('public.index'))
+
+@blueprint.route('/props')
+def test():
+    return render_template('public/all_proposals.html')

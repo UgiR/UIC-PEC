@@ -1,5 +1,7 @@
 import pytest
 import datetime as dt
+import time
+from uuid import UUID
 from PEC.user.models import User, Role
 from tests.factories import UserFactory
 
@@ -12,11 +14,19 @@ class TestUser:
         retrieved = User.query.get(user.id)
         assert retrieved == user
 
-    def test_create_at_defaults_to_datetime(self):
+    def test_created_at_defaults_to_datetime(self):
         user = User('username', 'email@email.com')
         user.save()
         assert bool(user.created_at)
         assert isinstance(user.created_at, dt.datetime)
+
+    def test_uuid_defaults_unique(self, db):
+        user1 = UserFactory()
+        user2 = UserFactory()
+        user1.save()
+        user2.save()
+        assert user1.uuid is not user2.uuid
+        assert isinstance(user1.uuid, UUID)
 
     def test_factory(self, db):
         user = UserFactory(password='password123')
