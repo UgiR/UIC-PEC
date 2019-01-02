@@ -1,6 +1,7 @@
 from flask import Blueprint, render_template, redirect, url_for, flash, request
 from flask_login import current_user, login_user, logout_user
 from .forms import LoginForm
+import datetime as dt
 
 blueprint = Blueprint('public', __name__, static_folder='../static')
 
@@ -18,6 +19,7 @@ def login():
     if request.method == 'POST':
         if login_form.validate_on_submit():
             login_user(login_form.user, remember=login_form.remember_me.data)
+            login_form.user.update(last_login=dt.datetime.utcnow())
             next_page = request.args.get('next') or url_for('public.index')
             return redirect(next_page)
         else:

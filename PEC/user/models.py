@@ -1,5 +1,4 @@
-from flask_security import UserMixin, RoleMixin
-import sqlalchemy_utils
+from flask_login import UserMixin
 from sqlalchemy_utils import UUIDType
 from werkzeug.security import generate_password_hash, check_password_hash
 from PEC.database import db, CRUDMixin
@@ -14,7 +13,7 @@ roles_users = db.Table('roles_users',
                        )
 
 
-class Role(RoleMixin, CRUDMixin, db.Model):
+class Role(CRUDMixin, db.Model):
     __tablename__ = 'roles'
     id = db.Column(db.Integer(), primary_key=True)
     name = db.Column(db.String(80), unique=True)

@@ -1,17 +1,16 @@
 from flask import Blueprint, render_template, redirect, url_for, request, flash
-from flask_login import current_user
+from flask_login import current_user, login_required
 from PEC.settings.forms import AccountDetailForm
-from PEC.database import db
 
 blueprint = Blueprint('settings', __name__, static_folder='../static', url_prefix='/settings')
 
 
 @blueprint.route('/account/details', methods=['GET', 'POST'])
+@login_required
 def account_details():
     detail_form = AccountDetailForm()
     if request.method == 'POST':
         if detail_form.validate_on_submit():
-            print('here')
             current_user.update(first_name=detail_form.first_name.data, last_name=detail_form.last_name.data,
                                 email=detail_form.email.data)
             flash('Account details updated')

@@ -8,7 +8,7 @@ def run_migrations_online():
 
     context.configure(connection=connection,
                       ...
-                      user_module_prefix='migration_types.',
+                ----> user_module_prefix='migration_types.',
                       ...
 '''
 

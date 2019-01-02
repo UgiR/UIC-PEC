@@ -81,24 +81,44 @@
                 <ul class="nav flex-column mb-2">
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span data-feather=""></span>
+                            <span data-feather="file"></span>
                             All Proposals
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span data-feather=""></span>
+                            <span data-feather="file"></span>
                             All Teams
                         </a>
                     </li>
                     <li class="nav-item">
                         <a class="nav-link" href="#">
-                            <span data-feather=""></span>
+                            <span data-feather="file"></span>
                             Leaderboard
                         </a>
                     </li>
                 </ul>
+
+                {% if current_user.is_authenticated %}
+
+                <h6 class="sidebar-heading d-flex justify-content-between align-items-center px-3 mt-4 mb-1 text-muted">
+                    <span>Settings</span>
+                    <a class="d-flex align-items-center text-muted" href="#">
+                        <span data-feather="chevron-down"></span>
+                    </a>
+                </h6>
+                <ul class="nav flex-column mb-2">
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('settings.account_details') }}">
+                            <span data-feather="settings"></span>
+                            Account Details
+                        </a>
+                    </li>
+                </ul>
             </div>
+
+            {% endif %}
+
         </nav>
 
         <main role="main" class="col-md-9 ml-sm-auto col-lg-10 pt-3 px-4">
