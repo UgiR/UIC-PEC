@@ -13,3 +13,4 @@ def run_migrations_online():
 '''
 
 import sqlalchemy_utils
+from sqlalchemy_utils.types import *

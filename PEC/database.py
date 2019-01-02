@@ -25,3 +25,12 @@ class CRUDMixin:
         db.session.delete(self)
         if commit:
             db.session.commit()
+
+
+class UserAttribute(CRUDMixin):
+    @classmethod
+    def get(cls, **kwargs):
+        skill_ = db.session.query(cls).filter_by(**kwargs).first()
+        if skill_ is None:
+            skill_ = cls.create(**kwargs)
+        return skill_
