@@ -11,7 +11,16 @@ class LoginForm(FlaskForm):
     remember_me = BooleanField('Remember Me')
     submit = SubmitField('Sign In')
 
+    def __init__(self, *args, **kwargs):
+        super(LoginForm , self).__init__(*args, **kwargs)
+        self.user = None
+
     def validate(self):
+        """ Checks for required fields and checks login credentials and activation status.
+        The queried account is stored in self.user
+
+        :return: True if credentials are correct and the user account is active, False otherwise
+        """
         initial_validatation = super(LoginForm, self).validate()
         if not initial_validatation:
             return False
@@ -30,19 +39,24 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
 
-    username = StringField('Username', validators=[DataRequired, Length(min=3, max=25)])
-    first_name = StringField('First name', Length(max=30))
-    last_name = StringField('Last name', Length(max=30))
+    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
+    first_name = StringField('First name', validators=[Length(max=30)])
+    last_name = StringField('Last name', validators=[Length(max=30)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])
     password = PasswordField('Password', validators=[DataRequired(), Length(min=6, max=40)])
     password_confirm = PasswordField('Verify password',
                                      validators=[DataRequired(), EqualTo('password', message='Passwords must match')])
+    submit = SubmitField('Register')
 
     def __init__(self, *args, **kwargs):
         super(RegisterForm, self).__init__(*args, **kwargs)
         self.user = None
 
     def validate(self):
+        """ Checks for required fields and queries for duplicate email/username
+
+        :return: True if username/email unique, False otherwise
+        """
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
             return False
@@ -50,7 +64,7 @@ class RegisterForm(FlaskForm):
         if self.user:
             self.username.errors.append('Choose a different username')
             return False
-        self.user = User.query.filter_by(email=self.email.data)
+        self.user = User.query.filter_by(email=self.email.data).first()
         if self.user:
             self.email.errors.append('Email already registered')
             return False

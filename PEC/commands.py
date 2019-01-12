@@ -31,6 +31,7 @@ def query_user(email):
         click.echo(user.last_name)
 
 
+# TODO: allow prompts to be supplied as arguments
 @user_cli.command('create')
 def create_user():
     click.echo('All user registration should be completed through the Register form.')
@@ -63,7 +64,3 @@ def activate_user(email):
             click.echo('User already active')
     else:
         click.echo('User not found')
-
-
-
-
