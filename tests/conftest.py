@@ -1,7 +1,7 @@
 import pytest
-from .factories import UserFactory
+from .factories import UserFactory, ProjectFactory
 from PEC.app import create_app
-from PEC.extensions import db as _db
+from PEC.extensions import db as db_
 
 
 @pytest.fixture
@@ -18,16 +18,23 @@ def app():
 @pytest.fixture
 def db(app):
     with app.app_context():
-        _db.create_all()
+        db_.create_all()
 
-    yield _db
+    yield db_
 
-    _db.session.close()
-    _db.drop_all()
+    db_.session.close()
+    db_.drop_all()
 
 
 @pytest.fixture
 def user(db):
-    user = UserFactory(password='password')
+    user_ = UserFactory(password='password')
     db.session.commit()
-    return user
+    return user_
+
+
+@pytest.fixture
+def project(db):
+    project_ = ProjectFactory()
+    db.session.commit()
+    return project_

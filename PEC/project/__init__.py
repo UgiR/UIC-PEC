@@ -1,0 +1,6 @@
+MAX_LENGTH_TITLE = 100
+MAX_LENGTH_DESCRIPTION = 10000
+
+from . import views
+
+

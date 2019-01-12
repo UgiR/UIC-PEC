@@ -1,7 +1,9 @@
-from factory import PostGenerationMethodCall, Sequence
+from factory import PostGenerationMethodCall, Sequence, SubFactory
 from factory.alchemy import SQLAlchemyModelFactory
 from PEC.database import db
 from PEC.user.models import User
+from PEC.project.models import Project
+from PEC.project.attributes import Status
 
 
 class BaseFactory(SQLAlchemyModelFactory):
@@ -20,3 +22,13 @@ class UserFactory(BaseFactory):
     password = PostGenerationMethodCall('set_password', 'example')
     first_name = "Joe"
     last_name = "Lock"
+
+
+class ProjectFactory(BaseFactory):
+    class Meta:
+        model = Project
+
+    title = Sequence(lambda n: 'project_{}'.format(n))
+    description = "This is a description."
+    status = Status.development
+    user = SubFactory(UserFactory)
