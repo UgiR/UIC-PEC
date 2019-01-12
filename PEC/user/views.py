@@ -5,6 +5,8 @@ blueprint = Blueprint('user', __name__, static_folder='../static', url_prefix='/
 
 
 @blueprint.route('/<user_id>')
-def user(user_id):
-    _user = User.query.filter_by(uuid=user_id).first()
-    return render_template('user/user.html', user=_user)
+def profile(user_id):
+    """ User profile page
+    """
+    user_ = User.query.filter_by(uuid=user_id).first()
+    return render_template('user/profile.html', user=user_)

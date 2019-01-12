@@ -10,7 +10,8 @@
     <title>PEC</title>
 
     <!-- Bootstrap core CSS -->
-    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/css/bootstrap.min.css"
+          integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
 
     <!-- Custom styles for this template -->
     <link href="{{ url_for('static', filename='css/custom.css') }}" rel="stylesheet" type="text/css">
@@ -18,7 +19,7 @@
 
 <body>
 <nav class="navbar sticky-top bg-light flex-md-nowrap p-0">
-    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#">Company name</a>
+    <a class="navbar-brand col-sm-3 col-md-2 mr-0" href="#"></a>
     <ul class="navbar-nav px-3">
         <li class="nav-item text-nowrap">
             <a class="nav-link" href="#"></a>
@@ -31,21 +32,32 @@
         <nav class="col-md-2 d-none d-md-block bg-light sidebar">
             <div class="sidebar-sticky">
                 <ul class="nav flex-column">
-                    <div class="nav-item dropdown">
-                        <a class="dropdown-toggle nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown" role="button">
-                            User
+                    {% if not current_user.is_authenticated %}
+                    <div class="nav-item text-center">
+                        <a class="nav-link" href="{{ url_for('public.login') }}">
+                            Sign in/Register
                         </a>
-                        <div class="dropdown-menu" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="#">Action</a>
+                    </div>
+                    {% else %}
+                    <div class="nav-item text-center dropdown">
+                        <a class="dropdown-toggle nav-link" href="#" id="dropdownMenuButton" data-toggle="dropdown"
+                           role="button">
+                            <img src="{{ current_user.avatar(25) }}">
+                            {{ current_user.email }}
+                        </a>
+                        <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
+                            <a class="dropdown-item" href="{{ url_for('user.profile', user_id=current_user.uuid)}}">My Profile</a>
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Action</a>
                             {% if current_user.is_authenticated %}
-                                <a class="dropdown-item" href="{{ url_for('public.logout') }}">Sign out</a>
+                            <a class="dropdown-item" href="{{ url_for('public.logout') }}">Sign out</a>
                             {% else %}
-                                <a class="dropdown-item" href="{{ url_for('public.login') }}">Sign in</a>
+                            <a class="dropdown-item" href="{{ url_for('public.login') }}">Sign in</a>
                             {% endif %}
                         </div>
                     </div>
+                    {% endif %}
+
                     <li class="nav-item">
                         <a class="nav-link active" href="#">
                             <span data-feather="home"></span>
@@ -82,7 +94,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="file"></span>
-                            All Proposals
+                            Project Showcase
                         </a>
                     </li>
                     <li class="nav-item">
@@ -94,7 +106,7 @@
                     <li class="nav-item">
                         <a class="nav-link" href="#">
                             <span data-feather="file"></span>
-                            Leaderboard
+                            All Proposals
                         </a>
                     </li>
                 </ul>
@@ -112,6 +124,12 @@
                         <a class="nav-link" href="{{ url_for('settings.account_details') }}">
                             <span data-feather="settings"></span>
                             Account Details
+                        </a>
+                    </li>
+                    <li class="nav-item">
+                        <a class="nav-link" href="{{ url_for('settings.account_portfolio') }}">
+                            <span data-feather="settings"></span>
+                            Account Portfolio
                         </a>
                     </li>
                 </ul>
@@ -132,13 +150,19 @@
 <!-- Placed at the end of the document so the pages load faster -->
 </script>
 <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js" integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49" crossorigin="anonymous"></script>
-<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js" integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.3/umd/popper.min.js"
+        integrity="sha384-ZMP7rVo3mIykV+2+9J3UJ46jBk0WLaUAdn689aCwoqbBJiSnjAK/l8WvCWPIPm49"
+        crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.1.3/js/bootstrap.min.js"
+        integrity="sha384-ChfqqxuZUCnJSK3+MXmPNIyE6ZbWh2IMqE241rYiqJxyMiZ6OW/JmZQ5stwEULTy"
+        crossorigin="anonymous"></script>
 
 <!-- Icons -->
 <script src="https://unpkg.com/feather-icons/dist/feather.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/holder/2.9.6/holder.js"></script>
 <script>
       feather.replace()
+
 </script>
 
 </body>
