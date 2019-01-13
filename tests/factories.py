@@ -17,9 +17,8 @@ class UserFactory(BaseFactory):
     class Meta:
         model = User
 
-    username = Sequence(lambda n: 'user_{}'.format(n))
     email = Sequence(lambda n: 'user{0}@example.com'.format(n))
-    password = PostGenerationMethodCall('set_password', 'example')
+    password = PostGenerationMethodCall('set_password', 'password')
     first_name = "Joe"
     last_name = "Lock"
 

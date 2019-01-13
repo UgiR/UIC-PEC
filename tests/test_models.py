@@ -2,6 +2,7 @@ import pytest
 import datetime as dt
 from uuid import UUID
 from PEC.user.models import User, Role
+from PEC.public.forms import RegisterForm
 from PEC.project.models import Project
 from PEC.user.attributes import Role, Course, Skill
 from tests.factories import UserFactory, ProjectFactory
@@ -11,14 +12,13 @@ from tests.factories import UserFactory, ProjectFactory
 class TestUser:
 
     def test_factory(self, db):
-        user = UserFactory(password='password123')
+        user = UserFactory()
         db.session.commit()
-        assert bool(user.username)
         assert bool(user.email)
         assert bool(user.first_name)
         assert bool(user.last_name)
         assert user.active is False
-        assert user.check_password('password123')
+        assert user.check_password('password')
 
     def test_get_by_id(self, user):
         retrieved = User.query.get(user.id)
@@ -78,6 +78,18 @@ class TestUser:
         assert user.has_skill(Skill.FLASK)
         assert user.has_skill(Skill.PYTHON, Skill.FLASK, Skill.BOOTSTRAP)
         assert not user.has_skill(Skill.PYTHON, Skill.JAVASCRIPT)
+
+    def test_from_form(self):
+        form = RegisterForm()
+        form.first_name.data = 'Joe'
+        form.last_name.data = 'Lock'
+        form.email.data = 'joe@mail.com'
+        form.password.data = 'password123'
+        user = User.from_register_form(form)
+        assert user.first_name == form.first_name.data
+        assert user.last_name == form.last_name.data
+        assert user.email == form.email.data
+        assert user.check_password(form.password.data)
 
 
 @pytest.mark.usefixtures('db')

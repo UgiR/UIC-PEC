@@ -8,11 +8,10 @@ class TestUserGroup:
     def test_user_create(self, app, db):
         runner = app.test_cli_runner()
         assert User.query.filter_by(email='test@testing.com').first() is None
-        result = runner.invoke(commands.create_user, input='y\nuser123\ntest@testing.com\npass123\nJoe\nSmith\n')
+        result = runner.invoke(commands.create_user, input='y\ntest@testing.com\npass123\nJoe\nSmith\n')
         assert not result.exception
         user = User.query.filter_by(email='test@testing.com').first()
         assert user is not None
-        assert user.username == 'user123'
         assert user.email == 'test@testing.com'
         assert user.check_password('pass123')
         assert user.first_name == 'Joe'
@@ -33,4 +32,3 @@ class TestUserGroup:
         assert not result.exception
         assert 'User does not exist' not in result.output
         assert user.email in result.output
-        assert user.username in result.output
