@@ -1,5 +1,5 @@
 from flask import Flask
-from PEC import public, user, settings, project, commands, api
+from PEC import public, user, settings, project, commands
 from PEC.user.models import User, Role
 from PEC.project.models import Project
 from PEC.extensions import db, migrate, login_manager, principal
@@ -27,7 +27,6 @@ def register_blueprints(app):
     app.register_blueprint(user.views.blueprint)
     app.register_blueprint(settings.views.blueprint)
     app.register_blueprint(project.views.blueprint)
-    app.register_blueprint(api.views.blueprint)
 
 
 def register_commands(app):

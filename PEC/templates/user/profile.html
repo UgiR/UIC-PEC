@@ -7,7 +7,7 @@
     <div class="col-8 mb-2">
         <div class="card bg-light">
             <div class="card-header">
-                {{ user.username }}
+                {{ user.email }}
                 {% if current_user == user %}
                     <a href="{{ url_for('settings.account_details') }}">
                         <span class="float-right" data-feather="edit"></span>
@@ -53,7 +53,13 @@
         <div class="card bg-light">
             <div class="card-header">Contributions</div>
             <div class="card-body">
-
+                <ul class="list-group">
+                    {% for project in user.contribution_projects %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('project.project', project_id=project.uuid) }}">{{ project.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>
@@ -65,7 +71,13 @@
         <div class="card bg-light">
             <div class="card-header">Projects</div>
             <div class="card-body">
-
+                <ul class="list-group">
+                    {% for project in user.projects %}
+                    <li class="list-group-item">
+                        <a href="{{ url_for('project.project', project_id=project.uuid) }}">{{ project.title }}</a>
+                    </li>
+                    {% endfor %}
+                </ul>
             </div>
         </div>
     </div>

@@ -14,14 +14,16 @@ def project(project_id):
 
     :param project_id: Project uuid
     """
-    pass
+    project_ = Project.query.filter_by(uuid=project_id).first()
+    return render_template('project/project.html', project=project_)
 
 
 @blueprint.route('/showcase')
 def showcase():
     """ TODO: Page to display all projects
     """
-    return render_template('project/showcase.html')
+    projects = Project.query.all()
+    return render_template('project/showcase.html', projects=projects)
 
 
 @blueprint.route('/new', methods=['GET', 'POST'])
@@ -31,12 +33,13 @@ def new():
     project_form = NewProjectForm()
     if request.method == 'POST':
         if project_form.validate_on_submit():
-            project = Project.from_project_form(project_form)
-            project.status = Status.development
-            current_user.projects.append(project)
-            project.save()
+            project_ = Project.from_project_form(project_form)
+            project_.status = Status.development
+            current_user.projects.append(project_)
+            project_.contributors.append(current_user)
+            project_.save()
             current_user.save()
-            return redirect(url_for('project.project', project_id=project.uuid))
+            return redirect(url_for('project.project', project_id=project_.uuid))
         else:
             flash_form_errors(project_form)
 

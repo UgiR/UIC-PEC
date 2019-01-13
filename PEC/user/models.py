@@ -51,7 +51,6 @@ class User(UserMixin, CRUDMixin, BaseModel):
 
     __tablename__ = 'users'
     uuid = db.Column(UUIDType(), nullable=False, unique=True, index=True, default=uuid.uuid4)
-    username = db.Column(db.String(80), index=True, unique=True)
     email = db.Column(db.String(80), index=True, unique=True)
     password = db.Column(db.String(128))
     active = db.Column(db.Boolean(), default=False)
@@ -65,8 +64,8 @@ class User(UserMixin, CRUDMixin, BaseModel):
     skills = db.relationship('Skill', secondary=skills_users, backref=db.backref('users', lazy='dynamic'))
 
     # Preserve **kwargs for Model constructor
-    def __init__(self, username, email, password=None, **kwargs):
-        db.Model.__init__(self, username=username, email=email, **kwargs)
+    def __init__(self, email, password=None, **kwargs):
+        db.Model.__init__(self, email=email, **kwargs)
         if password:
             self.set_password(password)
         else:
@@ -83,15 +82,12 @@ class User(UserMixin, CRUDMixin, BaseModel):
         if validate:
             if not form.validate():
                 return None
-        user = cls(form.username, form.email, form.password)
-        user.first_name = form.first_name
-        user.last_name = form.last_name
+        user = cls(form.email.data, form.password.data)
+        user.first_name = form.first_name.data
+        user.last_name = form.last_name.data
         return user
 
     def validate(self):
-        u = User.query.filter_by(username=self.username).first()
-        if u is not None:
-            return False
         u = User.query.filter_by(email=self.email).first()
         if u is not None:
             return False
@@ -168,9 +164,9 @@ class User(UserMixin, CRUDMixin, BaseModel):
         return check_password_hash(self.password, password)
 
     def __repr__(self):
-        return '<User {}>'.format(self.username)
+        return '<User {}>'.format(self.email)
 
 
 @login_manager.user_loader
-def load_user(_id):
-    return User.query.get(int(_id))
+def load_user(id_):
+    return User.query.get(int(id_))

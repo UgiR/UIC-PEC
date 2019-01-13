@@ -1,11 +1,11 @@
 {% extends 'fragments/base.html' %}
 
 {% block content %}
+
 <p>
-    {{ user.id }}
-    {{ user.uuid }}
-    {{ user.username }}
-    {{ user.email }}
+    {{ project.user }}
+    {{ project.title }}
+    {{ project.description }}
 </p>
 
 {% endblock %}

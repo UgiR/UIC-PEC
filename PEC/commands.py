@@ -26,7 +26,6 @@ def query_user(email):
     else:
         click.echo(user.uuid)
         click.echo(user.email)
-        click.echo(user.username)
         click.echo(user.first_name)
         click.echo(user.last_name)
 
@@ -37,12 +36,11 @@ def create_user():
     click.echo('All user registration should be completed through the Register form.')
     click.confirm('Continue?', abort=True)
     from PEC.user.models import User
-    username = click.prompt('Username', type=str)
     email = click.prompt('Email', type=str)
     password = click.prompt('Password', type=str)
     first_name = click.prompt('First name', type=str, default='')
     last_name = click.prompt('Last name', type=str, default='')
-    user = User(username, email, password)
+    user = User(email, password)
     user.first_name = first_name
     user.last_name = last_name
     if user.validate():

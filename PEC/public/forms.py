@@ -39,7 +39,6 @@ class LoginForm(FlaskForm):
 
 class RegisterForm(FlaskForm):
 
-    username = StringField('Username', validators=[DataRequired(), Length(min=3, max=25)])
     first_name = StringField('First name', validators=[Length(max=30)])
     last_name = StringField('Last name', validators=[Length(max=30)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])
@@ -59,10 +58,6 @@ class RegisterForm(FlaskForm):
         """
         initial_validation = super(RegisterForm, self).validate()
         if not initial_validation:
-            return False
-        self.user = User.query.filter_by(username=self.username.data).first()
-        if self.user:
-            self.username.errors.append('Choose a different username')
             return False
         self.user = User.query.filter_by(email=self.email.data).first()
         if self.user:

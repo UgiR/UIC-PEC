@@ -1,6 +1,7 @@
 import datetime as dt
 from flask import Blueprint, render_template, redirect, url_for, request
 from flask_login import current_user, login_user, logout_user
+from PEC.user.models import User
 from PEC.utils import flash_form_errors
 from .forms import LoginForm, RegisterForm
 
@@ -40,9 +41,16 @@ def logout():
     return redirect(url_for('public.index'))
 
 
-@blueprint.route('/register')
+@blueprint.route('/register', methods=['GET', 'POST'])
 def register():
     """ User registration page
     """
     register_form = RegisterForm()
+    if request.method == 'POST':
+        if register_form.validate_on_submit():
+            user = User.from_register_form(register_form)
+            user.save()
+            redirect(url_for('public.login'))
+        else:
+            flash_form_errors(register_form)
     return render_template('public/register.html', register_form=register_form)
