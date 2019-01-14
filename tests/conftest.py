@@ -1,4 +1,5 @@
 import pytest
+from webtest import TestApp
 from .factories import UserFactory, ProjectFactory
 from PEC.app import create_app
 from PEC.extensions import db as db_
@@ -13,6 +14,11 @@ def app():
     yield _app
 
     context.pop()
+
+
+@pytest.fixture
+def webapp(app):
+    return TestApp(app)
 
 
 @pytest.fixture

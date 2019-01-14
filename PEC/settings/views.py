@@ -50,5 +50,4 @@ def account_portfolio():
         else:
             flash_form_errors(portfolio_form)
             return redirect(url_for('settings.account_portfolio'))
-
     return render_template('settings/account/portfolio.html', portfolio_form=portfolio_form)
