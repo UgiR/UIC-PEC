@@ -25,6 +25,30 @@
         <div class="col-2"></div>
         <div class="col-8 mb-2">
             <div class="card bg-light">
+                <div class="card-header">GitHub</div>
+                <div class="card-body">
+                    <div class="form-inline justify-content-center">
+                        <div class="form-group mb-2">
+                            {% if not current_user.github_id %}
+                            <a class="btn btn-secondary mb-3" href="{{ url_for('settings.account_github_auth') }}" role="button">
+                                <i class="fab fa-github"> Connect</i>
+                            </a>
+                            {% else %}
+                            <div class="btn btn-secondary disabled mb-3">
+                                <i class="fab fa-github"> Connected</i>
+                            </div>
+                            {% endif %}
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-2"></div>
+        <div class="col-8 mb-2">
+            <div class="card bg-light">
                 <div class="card-header">Name</div>
                 <div class="card-body">
                     <div class="form-inline justify-content-center">

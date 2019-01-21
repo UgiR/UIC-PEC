@@ -2,13 +2,14 @@ import pytest
 from webtest import TestApp
 from .factories import UserFactory, ProjectFactory
 from PEC.app import create_app
-from PEC.extensions import db as db_
+from PEC.database import db as db_
 
 
 @pytest.fixture
 def app():
     _app = create_app('tests.config.Config')
     context = _app.test_request_context()
+
     context.push()
 
     yield _app
@@ -30,6 +31,7 @@ def db(app):
 
     db_.session.close()
     db_.drop_all()
+
 
 
 @pytest.fixture

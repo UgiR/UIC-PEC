@@ -23,6 +23,7 @@ users_projects = db.Table('users_projects',
 class Project(CRUDMixin, db.Model):
     __tablename__ = 'projects'
     id = db.Column(db.Integer(), primary_key=True)
+    github_id = db.Column(db.Integer(), unique=True, nullable=True)
     uuid = db.Column(UUIDType(), nullable=False, unique=True, index=True, default=uuid.uuid4)
     title = db.Column(db.String(MAX_LENGTH_TITLE), nullable=False)
     description = db.Column(db.String(MAX_LENGTH_DESCRIPTION), nullable=False)

@@ -2,6 +2,7 @@ from flask_login import login_user
 from .factories import UserFactory
 from PEC.public.forms import LoginForm, RegisterForm
 from PEC.settings.forms import PortfolioForm, AccountDetailForm
+from PEC.user.attributes import Skill as Skill_
 
 
 class TestLoginForm:

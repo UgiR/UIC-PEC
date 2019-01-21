@@ -10,3 +10,5 @@ def profile(user_id):
     """
     user_ = User.query.filter_by(uuid=user_id).first()
     return render_template('user/profile.html', user=user_)
+
+

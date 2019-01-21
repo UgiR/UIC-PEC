@@ -19,6 +19,7 @@ def test():
 @user_cli.command('query')
 @click.argument('email')
 def query_user(email):
+    """Fetches registered user by e-mail"""
     from PEC.user.models import User
     user = User.query.filter_by(email=email).first()
     if user is None:
@@ -33,6 +34,7 @@ def query_user(email):
 # TODO: allow prompts to be supplied as arguments
 @user_cli.command('create')
 def create_user():
+    """Creates new user in database"""
     click.echo('All user registration should be completed through the Register form.')
     click.confirm('Continue?', abort=True)
     from PEC.user.models import User
@@ -52,6 +54,7 @@ def create_user():
 @user_cli.command('activate')
 @click.argument('email')
 def activate_user(email):
+    """Activates user account"""
     from PEC.user.models import User
     user = User.query.filter_by(email=email).first()
     if user is not None:

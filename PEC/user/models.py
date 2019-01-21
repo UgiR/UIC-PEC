@@ -56,6 +56,7 @@ class User(UserMixin, CRUDMixin, BaseModel):
     active = db.Column(db.Boolean(), default=False)
     first_name = db.Column(db.String(30), nullable=True)
     last_name = db.Column(db.String(30), nullable=True)
+    github_id = db.Column(db.Integer(), unique=True, index=True)
     created_at = db.Column(db.DateTime, nullable=False, default=dt.datetime.utcnow())
     last_login_at = db.Column(db.DateTime)
     projects = db.relationship('Project', backref='user', lazy=True)

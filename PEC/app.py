@@ -2,7 +2,7 @@ from flask import Flask
 from PEC import public, user, settings, project, commands
 from PEC.user.models import User, Role
 from PEC.project.models import Project
-from PEC.extensions import db, migrate, login_manager, principal
+from PEC.extensions import db, migrate, login_manager, principal, session
 
 
 def create_app(config_object='PEC.config.Config'):
@@ -20,6 +20,7 @@ def register_extensions(app):
     migrate.init_app(app, db)
     login_manager.init_app(app)
     principal.init_app(app)
+    session.init_app(app)
 
 
 def register_blueprints(app):
