@@ -1,4 +1,3 @@
-import pytest
 from PEC import commands
 from PEC.user.models import User
 
