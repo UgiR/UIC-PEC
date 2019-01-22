@@ -5,14 +5,21 @@ from flask.cli import AppGroup
 HERE = os.path.abspath(os.path.dirname(__file__))
 PROJECT_ROOT = os.path.join(HERE, os.pardir)
 TEST_PATH = os.path.join(PROJECT_ROOT, 'tests')
+TEST_PATH_USER = os.path.join(PROJECT_ROOT, 'tests/test_user')
 
 user_cli = AppGroup('user')
+test_cli = AppGroup('test')
 
 
-@click.command()
-def test():
+@test_cli.command()
+@click.argument('target', required=False)
+def test(target):
     import pytest
-    rv = pytest.main([TEST_PATH, '--verbose'])
+    if target == 'all' or target is None:
+        rv = pytest.main([TEST_PATH, '--verbose'])
+    else:
+        test_dir = os.path.join(PROJECT_ROOT, 'tests/test_{}'.format(target))
+        rv = pytest.main([test_dir, '--verbose'])
     exit(rv)
 
 
