@@ -17,7 +17,7 @@ class Course(enum.Enum):
 
     @classmethod
     def to_choices(cls):
-        return [(course.value, '{0} - {1}'.format(course.name, course.value)) for course in cls]
+        return [(course.name, '{0} - {1}'.format(course.name, course.value)) for course in cls]
 
     CS100 = 'Discovering Computer Science'
     CS107 = 'Introduction to Computing and Programming'
@@ -114,7 +114,7 @@ class Skill(enum.Enum):
 
     @classmethod
     def to_choices(cls):
-        return [(skill.value, skill.value) for skill in cls]
+        return [(skill.name, skill.value) for skill in cls]
 
     HTML = 'HTML'
     CSS = 'CSS'

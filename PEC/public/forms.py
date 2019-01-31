@@ -5,7 +5,7 @@ from PEC.user.models import User
 
 
 class LoginForm(FlaskForm):
-
+    """ Form to be used in login """
     email = StringField('Username', validators=[DataRequired(), Email()])
     password = PasswordField('Password', validators=[DataRequired()])
     remember_me = BooleanField('Remember Me')
@@ -38,7 +38,7 @@ class LoginForm(FlaskForm):
 
 
 class RegisterForm(FlaskForm):
-
+    """ Form to be used in user registration """
     first_name = StringField('First name', validators=[Length(max=30)])
     last_name = StringField('Last name', validators=[Length(max=30)])
     email = StringField('Email', validators=[DataRequired(), Email(), Length(min=6, max=40)])

@@ -1,8 +1,11 @@
 import os
 import datetime as dt
+from dotenv import load_dotenv, find_dotenv
 
 
 class Config(object):
+    basedir = os.path.abspath(os.path.dirname(__file__))
+    load_dotenv(find_dotenv())
 
     '''BASIC FLASK CONFIG'''
     ENV = 'development'

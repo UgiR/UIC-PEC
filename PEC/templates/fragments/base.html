@@ -46,7 +46,7 @@
                             {{ current_user.email }}
                         </a>
                         <div class="dropdown-menu dropdown-menu-right" aria-labelledby="dropdownMenuButton">
-                            <a class="dropdown-item" href="{{ url_for('user.profile', user_id=current_user.uuid)}}">My Profile</a>
+                            <a class="dropdown-item" href="{{ url_for('user.profile', user_id=current_user.uuid) }}">My Profile</a>
                             <a class="dropdown-item" href="#">Action</a>
                             <a class="dropdown-item" href="#">Action</a>
                             {% if current_user.is_authenticated %}

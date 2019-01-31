@@ -3,9 +3,6 @@ from uuid import UUID
 import datetime as dt
 from tests.factories import UserFactory
 from PEC.user.models import User
-from PEC.user.attributes import Role as Role_
-from PEC.user.attributes import Skill as Skill_
-from PEC.user.attributes import Course as Course_
 from PEC.public.forms import RegisterForm
 
 
@@ -54,31 +51,29 @@ class TestUser:
         assert user.check_password('different_password') is True
 
     def test_roles(self, user):
-        #user.add_role(Role.USER, Role.MODERATOR)
-        user.add_attribute(roles=[Role_.USER, Role_.MODERATOR])
+        user.add_role('USER', 'MODERATOR')
         user.save()
         assert user.has_role()
-        assert user.has_role(Role_.USER, Role_.MODERATOR)
-        assert not user.has_role(Role_.USER, Role_.ADMIN)
+        assert user.has_role('USER', 'MODERATOR')
+        assert not user.has_role('USER', 'ADMIN')
 
     def test_courses(self, user):
         assert len(user.courses) == 0
-        #user.add_course(Course.CS111, Course.CS141, Course.CS151)
-        user.add_attribute(courses=[Course_.CS111, Course_.CS141, Course_.CS151])
+        user.add_course('CS111', 'CS141', 'CS151')
         user.save()
         assert user.has_course()
-        assert user.has_course(Course_.CS111)
-        assert user.has_course(Course_.CS111, Course_.CS141, Course_.CS151)
-        assert not user.has_course(Course_.CS111, Course_.CS251)
+        assert user.has_course('CS111')
+        assert user.has_course('CS111', 'CS141', 'CS151')
+        assert not user.has_course('CS111', 'CS251')
 
     def test_skills(self, user):
         assert len(user.skills) == 0
-        user.add_skill(Skill_.PYTHON, Skill_.FLASK, Skill_.BOOTSTRAP)
+        user.add_skill('PYTHON', 'FLASK', 'BOOTSTRAP')
         user.save()
         assert user.has_skill()
-        assert user.has_skill(Skill_.FLASK)
-        assert user.has_skill(Skill_.PYTHON, Skill_.FLASK, Skill_.BOOTSTRAP)
-        assert not user.has_skill(Skill_.PYTHON, Skill_.JAVASCRIPT)
+        assert user.has_skill('FLASK')
+        assert user.has_skill('PYTHON', 'FLASK', 'BOOTSTRAP')
+        assert not user.has_skill('PYTHON', 'JAVASCRIPT')
 
     def test_from_form(self):
         form = RegisterForm()
@@ -91,3 +86,15 @@ class TestUser:
         assert user.last_name == form.last_name.data
         assert user.email == form.email.data
         assert user.check_password(form.password.data)
+
+    def test_exists(self, user):
+        assert User.exists() is False
+        assert User.exists(email=user.email)
+        assert User.exists(email=user.email, first_name=user.first_name, last_name=user.last_name)
+        assert User.exists(first_name=user.first_name, last_name=user.last_name)
+        assert User.exists(uuid=user.uuid)
+        user.delete()
+        assert not User.exists(email=user.email)
+        assert not User.exists(email=user.email, first_name=user.first_name, last_name=user.last_name)
+        assert not User.exists(first_name=user.first_name, last_name=user.last_name)
+        assert not User.exists(uuid=user.uuid)

@@ -2,6 +2,6 @@ import enum
 
 
 class Status(enum.Enum):
-    proposal = 'Proposal'
-    discussion = 'diuscussion'
-    development = 'Open-Source'
+    """ Status for project #TODO Project status"""
+    proposal = 'proposal'
+    development = 'development'

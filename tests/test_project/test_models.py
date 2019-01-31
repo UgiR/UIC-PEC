@@ -3,7 +3,6 @@ import datetime as dt
 from uuid import UUID
 from PEC.user.models import User
 from PEC.project.models import Project
-from PEC.user.attributes import Skill as Skill_
 from tests.factories import ProjectFactory
 
 
@@ -36,12 +35,12 @@ class TestProject:
 
     def test_pref_skills(self, project):
         assert len(project.pref_skills) == 0
-        project.add_pref_skills(Skill_.PYTHON, Skill_.FLASK, Skill_.BOOTSTRAP)
+        project.add_pref_skills('PYTHON', 'FLASK', 'BOOTSTRAP')
         project.save()
         assert project.has_pref_skills()
-        assert project.has_pref_skills(Skill_.PYTHON)
-        assert project.has_pref_skills(Skill_.PYTHON, Skill_.FLASK, Skill_.BOOTSTRAP)
-        assert not project.has_pref_skills(Skill_.PYTHON, Skill_.JAVASCRIPT)
+        assert project.has_pref_skills('PYTHON')
+        assert project.has_pref_skills('PYTHON', 'FLASK', 'BOOTSTRAP')
+        assert not project.has_pref_skills('PYTHON', 'JAVASCRIPT')
 
     def test_contributors(self, project, user):
         assert len(project.contributors) == 0

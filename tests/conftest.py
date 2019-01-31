@@ -33,7 +33,6 @@ def db(app):
     db_.drop_all()
 
 
-
 @pytest.fixture
 def user(db):
     user_ = UserFactory(password='password')

@@ -4,9 +4,6 @@ from werkzeug import security
 import requests
 from github import Github
 from PEC.settings.forms import AccountDetailForm, PortfolioForm
-from PEC.user.attributes import Course, Skill
-from PEC.user.models import Course as Course_
-from PEC.user.models import Skill as Skill_
 from PEC.user.models import User
 from PEC.utils import flash_form_errors
 
@@ -85,12 +82,8 @@ def account_portfolio():
     if request.method == 'POST':
         if portfolio_form.validate_on_submit():
             current_user.courses.clear()
-            for selected in portfolio_form.course_selection.data:
-                course = Course_.get(name=Course(selected))
-                current_user.courses.append(course)
-            for selected in portfolio_form.skill_selection.data:
-                skill = Skill_.get(name=Skill(selected))
-                current_user.skills.append(skill)
+            current_user.add_skill(*portfolio_form.skill_selection.data)
+            current_user.add_course(*portfolio_form.course_selection.data)
             current_user.save()
             return redirect(url_for('settings.account_portfolio'))
         else:

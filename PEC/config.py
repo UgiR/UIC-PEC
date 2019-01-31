@@ -14,7 +14,7 @@ class Config(object):
     SECRET_KEY = os.environ.get('SECRET_KEY')
 
     '''SQLALCHEMY CONFIG'''
-    SQLALCHEMY_DATABASE_URI = 'sqlite:///' + os.path.join(basedir, 'app.db')
+    SQLALCHEMY_DATABASE_URI = 'mysql+pymysql://admin:password@127.0.0.1:3306/db?charset=utf8mb4&binary_prefix=true'
     SQLALCHEMY_TRACK_MODIFICATIONS = False
 
     '''FLASK-SESSION CONFIG'''

@@ -33,6 +33,7 @@ def register_blueprints(app):
 def register_commands(app):
     app.cli.add_command(commands.test)
     app.cli.add_command(commands.user_cli)
+    app.cli.add_command(commands.project_cli)
 
 
 def register_shell_context(app):

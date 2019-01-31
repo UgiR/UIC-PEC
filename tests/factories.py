@@ -3,7 +3,7 @@ from factory.alchemy import SQLAlchemyModelFactory
 from PEC.database import db
 from PEC.user.models import User
 from PEC.project.models import Project
-from PEC.project.attributes import Status
+from PEC.project.attributes import Status as Status_
 
 
 class BaseFactory(SQLAlchemyModelFactory):
@@ -29,5 +29,5 @@ class ProjectFactory(BaseFactory):
 
     title = Sequence(lambda n: 'project_{}'.format(n))
     description = "This is a description."
-    status = Status.development
+    status = Status_.development
     user = SubFactory(UserFactory)
