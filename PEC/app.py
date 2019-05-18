@@ -1,4 +1,5 @@
 from flask import Flask
+import os
 from PEC import public, user, settings, project, commands
 from PEC.user.models import User, Role
 from PEC.project.models import Project

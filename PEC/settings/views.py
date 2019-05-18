@@ -3,7 +3,7 @@ from flask_login import current_user, login_required
 from werkzeug import security
 import requests
 from github import Github
-from PEC.settings.forms import AccountDetailForm, PortfolioForm
+from PEC.settings.forms import AccountDetailForm, PortfolioForm, UpdatePasswordForm
 from PEC.user.models import User
 from PEC.utils import flash_form_errors
 
@@ -16,16 +16,21 @@ def account_details():
     """ Account details settings page
     """
     detail_form = AccountDetailForm()
+    password_form = UpdatePasswordForm()
     if request.method == 'POST':
         if detail_form.validate_on_submit():
             current_user.update(first_name=detail_form.first_name.data, last_name=detail_form.last_name.data,
                                 email=detail_form.email.data)
             flash('Account details updated')
-            return redirect(url_for('settings.account_details'))
+        elif password_form.validate_on_submit():
+            current_user.set_password(password_form.new_password.data)
         else:
             flash_form_errors(detail_form)
-            return redirect(url_for('settings.account_details'))
-    return render_template('settings/account/details.html', uuid=current_user.uuid, detail_form=detail_form)
+            flash_form_errors(password_form)
+        return redirect(url_for('settings.account_details'))
+    return render_template('settings/account-settings.html',
+                           detail_form=detail_form,
+                           password_form=password_form)
 
 
 @blueprint.route('/account/github/auth')
