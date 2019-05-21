@@ -30,7 +30,7 @@ def login():
             return redirect(next_page)
         else:
             flash_form_errors(login_form)
-    return render_template('public/login.html', login_user_form=login_form)
+    return render_template('public/utility-login.html', login_user_form=login_form)
 
 
 @blueprint.route('/logout')

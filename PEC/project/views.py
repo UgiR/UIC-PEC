@@ -10,7 +10,7 @@ blueprint = Blueprint('project', __name__, static_folder='../static', url_prefix
 
 @blueprint.route('/<project_id>')
 def project(project_id):
-    """ TODO: Page to display specific project
+    """ Display project by project_id
 
     :param project_id: Project uuid
     """

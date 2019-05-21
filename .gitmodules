@@ -1,0 +1,6 @@
+[submodule "PEC/templates"]
+	path = PEC/templates
+	url = https://github.com/UgiR/UIC-PEC-templates.git
+[submodule "PEC/static"]
+	path = PEC/static
+	url = https://github.com/UgiR/UIC-PEC-static.git
