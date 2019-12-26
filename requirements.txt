@@ -56,7 +56,7 @@ text-unidecode==1.2
 tzlocal==1.5.1
 urllib3==1.24.1
 vine==1.2.0
-waitress==1.1.0
+waitress==1.4.1
 WebOb==1.8.5
 WebTest==2.0.32
 Werkzeug==0.14.1
