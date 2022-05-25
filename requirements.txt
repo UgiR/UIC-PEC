@@ -39,7 +39,7 @@ pluggy==0.8.0
 py==1.7.0
 pycparser==2.19
 PyGithub==1.43.4
-PyJWT==1.7.1
+PyJWT==2.4.0
 PyMySQL==0.9.3
 pytest==4.0.2
 python-dateutil==2.7.5
